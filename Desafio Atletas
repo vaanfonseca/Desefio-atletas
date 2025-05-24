@@ -1,0 +1,100 @@
+using System;
+using System.Globalization;
+
+class Atletas
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Qual a quantidade de atletas? ");
+        int quantAtletas = int.Parse(Console.ReadLine());
+        int count = 1;
+        int quantMulheres = 0;
+        int quantHomens = 0;
+
+        string nome, sexo, atletaMaisAlto = "teste";
+        double peso, altura, maiorAltura = 0;
+        double pesoMedioDosAtletas, porcentagemDosHomens = 0;
+        double somaDasAlturasDasMulheres = 0;
+        double alturaMediaDasMulheres = 0;
+        double somaDPesoDosAtletas = 0;
+
+
+
+       while (count <= quantAtletas)
+        {
+            Console.WriteLine($"Digite os dados do atleta número {count}:");
+            Console.Write("Nome: ");
+            nome = Console.ReadLine().Trim();
+
+            Console.Write("Sexo (M/F): ");
+            sexo = Console.ReadLine().ToUpper().Trim();
+            while (sexo != "M" && sexo != "F")
+            {
+                Console.WriteLine("Sexo inválido. Digite novamente.");
+                Console.Write("Sexo (M/F): ");
+                sexo = Console.ReadLine().ToUpper().Trim();
+
+            }
+            Console.Write("Altura: ");
+            altura = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            while (altura < 1)
+            {
+                Console.WriteLine("Altura inválida. Digite novamente.");
+                Console.Write("Altura: ");
+                altura = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            }
+
+            if (sexo == "F")
+            {
+                quantMulheres++;
+                somaDasAlturasDasMulheres += altura;
+            }
+            else
+            {
+                quantHomens++;
+            }
+
+            if (altura > maiorAltura)
+            {
+                maiorAltura = altura;
+                atletaMaisAlto = nome;
+            }
+
+            Console.Write("Peso: ");
+            peso = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            while (peso < 1)
+            {
+                Console.Write("Peso inválido. Digite novamente.");
+                Console.Write("Peso: ");
+                peso = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            }
+
+            somaDPesoDosAtletas += peso;
+            count++;
+
+           
+        }
+
+
+        Console.WriteLine("Relatório: ");
+        pesoMedioDosAtletas = somaDPesoDosAtletas / quantAtletas;
+        Console.WriteLine($"Peso médio dos atletas: {pesoMedioDosAtletas:F2}");
+        Console.WriteLine($"Atleta mais alta: {atletaMaisAlto}");
+
+        porcentagemDosHomens = ((double)quantHomens / quantAtletas) * 100;
+
+        if (quantMulheres != 0)
+        {
+            alturaMediaDasMulheres = somaDasAlturasDasMulheres / quantMulheres;
+            Console.WriteLine($"Altura média das mulheres: {alturaMediaDasMulheres:F2}");
+        }
+        else
+        {
+            Console.WriteLine($"Porcentagem e homens: {porcentagemDosHomens: F1}%%");
+            Console.WriteLine("Não há mulheres cadastradas");
+        }
+    }
+}
+
+
+
