@@ -1,0 +1,105 @@
+using System;
+using System.Globalization;
+
+
+namespace _5_Desafio_Bar
+{
+    class Conta
+    {
+        public String Sexo;
+        public int QuantidadeCervejas;
+        public int QuantidadeRefrigerantes;
+        public int QuantidadeEspetinhos;
+
+        public static double Cerveja = 5.00;
+        public static double Refrigerante = 3.00;
+        public static double Espetinho = 7.00;
+        public static double Couvert = 4.00;
+
+
+        public double Ingresso()
+        {
+            if (Sexo == "F")
+            {
+                return 8.00;
+            }
+            else
+            {
+                return 10.00;
+            }
+        }
+
+        public double Consumo()
+        {
+            double totalCervejas = QuantidadeCervejas * Cerveja;
+            double totalRefrigerantes = QuantidadeRefrigerantes * Refrigerante;
+            double totalEspetinhos = QuantidadeEspetinhos * Espetinho;
+            return totalCervejas + totalRefrigerantes + totalEspetinhos;
+        }
+
+        public double CouvertValor()
+        {
+            if (Consumo() > 30.00)
+            {
+                return 0.00;
+            }
+            else
+            {
+                return Couvert;
+            }
+        }
+
+        public double Total()
+        {
+           return Ingresso() + Consumo() + CouvertValor();
+        }
+
+        public override string ToString()
+        {
+            return "Consumo = R$" + Consumo().ToString("F2", CultureInfo.InvariantCulture) + "\n" +
+                   "Couvert = R$" + CouvertValor().ToString("F2", CultureInfo.InvariantCulture) + "\n" +
+                   "Ingresso = R$" + Ingresso().ToString("F2", CultureInfo.InvariantCulture) + "\n" +
+                   "Valor a pagar = R$" + Total().ToString("F2", CultureInfo.InvariantCulture);
+        }
+    }
+}
+
+
+using System;
+using System.Globalization;
+
+namespace _5_Desafio_Bar
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            Conta conta = new Conta();
+
+            Console.Write("Sexo: ");
+            conta.Sexo = Console.ReadLine().ToUpper().Trim();
+            while (conta.Sexo != "F" && conta.Sexo != "M")
+            {
+                Console.Write("Sexo inválido. Digite novamente (F ou M): ");
+                conta.Sexo = Console.ReadLine().ToUpper().Trim();
+            }
+
+            Console.Write("Quantidade de cervejas: ");
+            conta.QuantidadeCervejas = int.Parse(Console.ReadLine());
+
+            Console.Write("Quantidade de refrigerantes: ");
+            conta.QuantidadeRefrigerantes = int.Parse(Console.ReadLine());
+
+            Console.Write("Quantidade de espetinhos: ");
+            conta.QuantidadeEspetinhos = int.Parse(Console.ReadLine());
+
+           Console.WriteLine();
+           Console.WriteLine("Relatório:");
+          Console.WriteLine();
+          Console.Write(conta);
+          Console.WriteLine();
+
+       }
+    }
+}
