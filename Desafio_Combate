@@ -1,0 +1,108 @@
+using System;
+
+namespace desafio_combate
+{
+    class Campeao
+    {
+
+        public string Nome { get; set; }
+        public int Vida { get; set; }
+        public int Ataque { get; set; }
+        public int Armadura { get; set; }
+
+        public Campeao(string nome, int vida, int ataque, int armadura)
+        {
+            Nome = nome;
+            Vida = vida;
+            Ataque = ataque;
+            Armadura = armadura;
+        }
+        public void Atacar(Campeao oponente)
+        {
+            int dano = Ataque - oponente.Armadura;
+            if (dano < 0) dano = 0;
+
+            oponente.Vida = oponente.Vida - dano;
+
+            if (oponente.Vida < 0)
+                oponente.Vida = 0;
+        }
+
+        public override string ToString()
+        {
+            return Nome + ": " + Vida + " de Vida";
+        }
+    }
+}
+
+
+using desafio_combate;
+using System;
+using System.Globalization;
+
+namespace DesafioCombate
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Digite os dados do primeiro campeão: ");
+            string[] dadosCampeao1 = Console.ReadLine().Split(' ');
+            string nomeCampeao1 = dadosCampeao1[0];
+            int vidaCampeao1 = int.Parse(dadosCampeao1[1]);
+            int ataqueCampeao1 = int.Parse(dadosCampeao1[2]);
+            int armaduraCampeao1 = int.Parse(dadosCampeao1[3]);
+
+            Console.WriteLine();
+            Console.WriteLine("Digite os dados do segundo campeão: ");
+            string[] dadosCampeao2 = Console.ReadLine().Split(' ');
+            string nomeCampeao2 = dadosCampeao2[0];
+            int vidaCampeao2 = int.Parse(dadosCampeao2[1]);
+            int ataqueCampeao2 = int.Parse(dadosCampeao2[2]);
+            int armaduraCampeao2 = int.Parse(dadosCampeao2[3]);
+
+            Campeao campeao1 = new Campeao(nomeCampeao1, vidaCampeao1, ataqueCampeao1, armaduraCampeao1);
+            Campeao campeao2 = new Campeao(nomeCampeao2, vidaCampeao2, ataqueCampeao2, armaduraCampeao2);
+
+            Console.WriteLine();
+
+
+            Console.Write("Quantos turnos você deseja executar? ");
+            int turnos = int.Parse(Console.ReadLine());
+
+            Console.WriteLine();
+
+            for (int i = 1; i <= turnos; i++)
+            {
+                if (campeao1.Vida == 0 || campeao2.Vida == 0)
+                    break;
+
+                campeao1.Atacar(campeao2);
+                campeao2.Atacar(campeao1);
+
+                Console.WriteLine("Turno: " + i);
+                Console.WriteLine(campeao1);
+                Console.WriteLine(campeao2);
+                Console.WriteLine();
+
+                if (campeao1.Vida <= 0)
+                {
+                    Console.WriteLine(campeao1.Nome + " foi derrotado!");
+
+                }
+
+                else if(campeao2.Vida <= 0)
+                {
+                    Console.WriteLine(campeao2.Nome + " foi derrotado!");
+
+                }
+
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("FIM DO COMBATE!");
+            Console.WriteLine();
+        }
+    }
+}
+
