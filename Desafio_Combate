@@ -20,7 +20,7 @@ namespace desafio_combate
         public void Atacar(Campeao oponente)
         {
             int dano = Ataque - oponente.Armadura;
-            if (dano < 0) dano = 0;
+            if (dano < 0) dano = 1;
 
             oponente.Vida = oponente.Vida - dano;
 
@@ -34,6 +34,7 @@ namespace desafio_combate
         }
     }
 }
+
 
 
 using desafio_combate;
